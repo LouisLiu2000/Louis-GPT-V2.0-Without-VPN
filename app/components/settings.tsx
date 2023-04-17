@@ -124,12 +124,7 @@ export function Settings(props: { closeSettings: () => void }) {
   const builtinCount = SearchService.count.builtin;
   const customCount = promptStore.prompts.size ?? 0;
 
-  const showUsage = accessStore.isAuthorized();
-  useEffect(() => {
-    checkUpdate();
-    showUsage && checkUsage();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+ 
 
   useEffect(() => {
     const keydownEvent = (e: KeyboardEvent) => {
@@ -223,30 +218,7 @@ export function Settings(props: { closeSettings: () => void }) {
             </Popover>
           </SettingItem>
 
-          <SettingItem
-            title={Locale.Settings.Update.Version(currentVersion ?? "unknown")}
-            subTitle={
-              checkingUpdate
-                ? Locale.Settings.Update.IsChecking
-                : hasNewVersion
-                ? Locale.Settings.Update.FoundUpdate(remoteId ?? "ERROR")
-                : Locale.Settings.Update.IsLatest
-            }
-          >
-            {checkingUpdate ? (
-              <div />
-            ) : hasNewVersion ? (
-              <Link href={UPDATE_URL} target="_blank" className="link">
-                {Locale.Settings.Update.GoToUpdate}
-              </Link>
-            ) : (
-              <IconButton
-                icon={<ResetIcon></ResetIcon>}
-                text={Locale.Settings.Update.CheckUpdate}
-                onClick={() => checkUpdate(true)}
-              />
-            )}
-          </SettingItem>
+          
 
           <SettingItem title={Locale.Settings.SendKey}>
             <select
@@ -379,29 +351,7 @@ export function Settings(props: { closeSettings: () => void }) {
             />
           </SettingItem>
 
-          <SettingItem
-            title={Locale.Settings.Usage.Title}
-            subTitle={
-              showUsage
-                ? loadingUsage
-                  ? Locale.Settings.Usage.IsChecking
-                  : Locale.Settings.Usage.SubTitle(
-                      usage?.used ?? "[?]",
-                      usage?.subscription ?? "[?]",
-                    )
-                : Locale.Settings.Usage.NoAccess
-            }
-          >
-            {!showUsage || loadingUsage ? (
-              <div />
-            ) : (
-              <IconButton
-                icon={<ResetIcon></ResetIcon>}
-                text={Locale.Settings.Usage.Check}
-                onClick={checkUsage}
-              />
-            )}
-          </SettingItem>
+         
 
           <SettingItem
             title={Locale.Settings.HistoryCount.Title}
