@@ -116,14 +116,21 @@ export function Settings(props: { closeSettings: () => void }) {
   const accessStore = useAccessStore();
   const enabledAccessControl = useMemo(
     () => accessStore.enabledAccessControl(),
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
+  const showUsage = accessStore.isAuthorized();
 
   const promptStore = usePromptStore();
   const builtinCount = SearchService.count.builtin;
   const customCount = promptStore.prompts.size ?? 0;
-
+  const showUsage = accessStore.isAuthorized();
+  useEffect(() => {
+    checkUpdate();
+    showUsage && checkUsage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
  
 
   useEffect(() => {
