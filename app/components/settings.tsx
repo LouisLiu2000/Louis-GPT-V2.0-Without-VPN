@@ -99,19 +99,7 @@ export function Settings(props: { closeSettings: () => void }) {
     });
   }
 
-  const [usage, setUsage] = useState<{
-    used?: number;
-    subscription?: number;
-  }>();
-  const [loadingUsage, setLoadingUsage] = useState(false);
-  function checkUsage() {
-    setLoadingUsage(true);
-    requestUsage()
-      .then((res) => setUsage(res))
-      .finally(() => {
-        setLoadingUsage(false);
-      });
-  }
+ 
 
   const accessStore = useAccessStore();
   const enabledAccessControl = useMemo(
