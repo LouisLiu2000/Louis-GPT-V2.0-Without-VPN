@@ -99,19 +99,7 @@ export function Settings(props: { closeSettings: () => void }) {
     });
   }
 
-  const [usage, setUsage] = useState<{
-    used?: number;
-    subscription?: number;
-  }>();
-  const [loadingUsage, setLoadingUsage] = useState(false);
-  function checkUsage() {
-    setLoadingUsage(true);
-    requestUsage()
-      .then((res) => setUsage(res))
-      .finally(() => {
-        setLoadingUsage(false);
-      });
-  }
+  
 
   const accessStore = useAccessStore();
   const enabledAccessControl = useMemo(
@@ -127,7 +115,7 @@ export function Settings(props: { closeSettings: () => void }) {
   const showUsage = accessStore.isAuthorized();
   useEffect(() => {
     checkUpdate();
-    showUsage && checkUsage();
+   
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -221,31 +209,6 @@ export function Settings(props: { closeSettings: () => void }) {
                 <Avatar role="user" />
               </div>
             </Popover>
-          </SettingItem>
-
-          <SettingItem
-            title={Locale.Settings.Update.Version(currentVersion ?? "unknown")}
-            subTitle={
-              checkingUpdate
-                ? Locale.Settings.Update.IsChecking
-                : hasNewVersion
-                ? Locale.Settings.Update.FoundUpdate(remoteId ?? "ERROR")
-                : Locale.Settings.Update.IsLatest
-            }
-          >
-            {checkingUpdate ? (
-              <div />
-            ) : hasNewVersion ? (
-              <Link href={UPDATE_URL} target="_blank" className="link">
-                {Locale.Settings.Update.GoToUpdate}
-              </Link>
-            ) : (
-              <IconButton
-                icon={<ResetIcon></ResetIcon>}
-                text={Locale.Settings.Update.CheckUpdate}
-                onClick={() => checkUpdate(true)}
-              />
-            )}
           </SettingItem>
 
           <SettingItem title={Locale.Settings.SendKey}>
@@ -379,29 +342,7 @@ export function Settings(props: { closeSettings: () => void }) {
             />
           </SettingItem>
 
-          <SettingItem
-            title={Locale.Settings.Usage.Title}
-            subTitle={
-              showUsage
-                ? loadingUsage
-                  ? Locale.Settings.Usage.IsChecking
-                  : Locale.Settings.Usage.SubTitle(
-                      usage?.used ?? "[?]",
-                      usage?.subscription ?? "[?]",
-                    )
-                : Locale.Settings.Usage.NoAccess
-            }
-          >
-            {!showUsage || loadingUsage ? (
-              <div />
-            ) : (
-              <IconButton
-                icon={<ResetIcon></ResetIcon>}
-                text={Locale.Settings.Usage.Check}
-                onClick={checkUsage}
-              />
-            )}
-          </SettingItem>
+         
 
           <SettingItem
             title={Locale.Settings.HistoryCount.Title}
