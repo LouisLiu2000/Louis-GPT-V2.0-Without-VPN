@@ -86,32 +86,7 @@ export function Settings(props: { closeSettings: () => void }) {
       state.clearSessions,
     ]);
 
-  const updateStore = useUpdateStore();
-  const [checkingUpdate, setCheckingUpdate] = useState(false);
-  const currentVersion = updateStore.version;
-  const remoteId = updateStore.remoteVersion;
-  const hasNewVersion = currentVersion !== remoteId;
-
-  function checkUpdate(force = false) {
-    setCheckingUpdate(true);
-    updateStore.getLatestVersion(force).then(() => {
-      setCheckingUpdate(false);
-    });
-  }
-
-  const [usage, setUsage] = useState<{
-    used?: number;
-    subscription?: number;
-  }>();
-  const [loadingUsage, setLoadingUsage] = useState(false);
-  function checkUsage() {
-    setLoadingUsage(true);
-    requestUsage()
-      .then((res) => setUsage(res))
-      .finally(() => {
-        setLoadingUsage(false);
-      });
-  }
+  
 
   const accessStore = useAccessStore();
   const enabledAccessControl = useMemo(
