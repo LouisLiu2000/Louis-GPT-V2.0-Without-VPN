@@ -167,9 +167,9 @@ function _Home() {
         className={styles.sidebar + ` ${showSideBar && styles["sidebar-show"]}`}
       >
         <div className={styles["sidebar-header"]}>
-          <div className={styles["sidebar-title"]}>ChatGPT Louis Edition </div>
+          <div className={styles["sidebar-title"]}>ChatGPT </div>
           <div className={styles["sidebar-sub-title"]}>
-            AI Makes Life Better .
+            Louis Edition .
           </div>
           <div className={styles["sidebar-logo"]}>
             <ChatGptIcon />
