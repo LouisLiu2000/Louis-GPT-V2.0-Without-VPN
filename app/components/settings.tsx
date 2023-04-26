@@ -99,7 +99,19 @@ export function Settings(props: { closeSettings: () => void }) {
     });
   }
 
-  
+  const [usage, setUsage] = useState<{
+    used?: number;
+    subscription?: number;
+  }>();
+  const [loadingUsage, setLoadingUsage] = useState(false);
+  function checkUsage() {
+    setLoadingUsage(true);
+    requestUsage()
+      .then((res) => setUsage(res))
+      .finally(() => {
+        setLoadingUsage(false);
+      });
+  }
 
   const accessStore = useAccessStore();
   const enabledAccessControl = useMemo(
@@ -115,7 +127,7 @@ export function Settings(props: { closeSettings: () => void }) {
   const showUsage = accessStore.isAuthorized();
   useEffect(() => {
     checkUpdate();
-   
+    showUsage && checkUsage();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -210,6 +222,8 @@ export function Settings(props: { closeSettings: () => void }) {
               </div>
             </Popover>
           </SettingItem>
+
+          
 
           <SettingItem title={Locale.Settings.SendKey}>
             <select
@@ -331,7 +345,6 @@ export function Settings(props: { closeSettings: () => void }) {
 
 
          
-
           <SettingItem
             title={Locale.Settings.HistoryCount.Title}
             subTitle={Locale.Settings.HistoryCount.SubTitle}
